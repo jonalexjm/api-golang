@@ -1,6 +1,14 @@
 package transport
 
-import "../service"
+import (
+	"encoding/json"
+	"net/http"
+	"strconv"
+	"strings"
+
+	"api-rest-go/internal/model"
+	"api-rest-go/internal/service"
+)
 
 type BookHandler struct {
 	service *service.Service
@@ -28,7 +36,7 @@ func (h *BookHandler) HandleBooks(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		created, err = h.service.CrearLibro(&libro)
+		created, err := h.service.CrearLibro(&libro)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
